@@ -1,0 +1,45 @@
+﻿<Window x:Class="XliffResourceExcluder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:XliffResourceExcluder"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="768" Width="1024">
+    <Grid Margin="4">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Button Content="1. Load XLIFF file(s)" Click="OnLoadXliff" Margin="0,4" Grid.ColumnSpan="2" HorizontalAlignment="Center" />
+        <GroupBox Header="2. Select what to exclude from translation" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,4" HorizontalAlignment="Center">
+            <StackPanel>
+                <Button x:Name="m_ResourceButton" Content="Select resource file(s) to exclude" Click="OnSelectResourceFile" Grid.Row="1" Margin="4" />
+                <CheckBox x:Name="m_ExcludeNonStrings" Content="Exclude non-string types" Grid.Row="1" Margin="4,4,0,4" Grid.Column="1" Checked="OnExcludeTypesCheckChanged" Unchecked="OnExcludeTypesCheckChanged" />
+            </StackPanel>
+        </GroupBox>
+        <Button Content="3. Process and preview XLIFF changes" Click="OnPreview" Grid.Row="2" Margin="0,4" Grid.ColumnSpan="2" HorizontalAlignment="Center" />
+        <TextBlock Text="Resources that will be set as non-translatable in XLIFF file(s)" Grid.Row="3" Margin="0,8,0,0" Grid.ColumnSpan="2"  />
+        <ListView Grid.Row="4" Margin="0,4" ItemsSource="{Binding TranslationUnits, Mode=OneTime}" Grid.ColumnSpan="2">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Resource" DisplayMemberBinding="{Binding ResourceFile}" Width="250" />
+                    <GridViewColumn Header="Key" DisplayMemberBinding="{Binding Key}" Width="270" />
+                    <GridViewColumn Header="Text" DisplayMemberBinding="{Binding TargetText}" Width="400" />
+                    <GridViewColumn Header="Language" DisplayMemberBinding="{Binding TargetLanguage}" Width="75" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="4. Apply changes to XLIFF file(s)" Click="OnApply" Grid.Row="5" Margin="0,8,0,0" Grid.ColumnSpan="2" />
+        <ProgressBar x:Name="m_ProgressBar" Grid.Row="6" Grid.ColumnSpan="2" Margin="0,8,0,0" Height="10" />
+    </Grid>
+</Window>
